@@ -6,6 +6,7 @@ import {login} from "../api/apiClient";
 export default function LoginScreen({navigation}: any) {
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
 
   const onLogin = async () => {
     if (!userid || !password) {
@@ -30,17 +31,25 @@ export default function LoginScreen({navigation}: any) {
       <TextInput
         placeholder="UserId"
         value={userid}
+        placeholderTextColor={"#000"}
         onChangeText={setUserid}
         style={styles.input}
       />
 
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        style={styles.input}
-        secureTextEntry
-      />
+      <View style={styles.passBox}>
+        <TextInput
+          placeholder="Password"
+          value={password}
+          placeholderTextColor={"#000"}
+          onChangeText={setPassword}
+          style={styles.passInput}
+          secureTextEntry={!showPass}
+        />
+
+        <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+          <Text style={styles.showText}>{showPass ? "Hide" : "Show"}</Text>
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity style={styles.btn} onPress={onLogin}>
         <Text style={styles.btnText}>Login</Text>
@@ -67,7 +76,29 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     padding: 12,
     borderRadius: 8, 
-    marginBottom: 12
+    marginBottom: 12,
+    color: "#000"
+  },
+  passBox: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 12,
+    color: "#000"
+  },
+  passInput: {
+    flex: 1, 
+    paddingVertical: 12,
+    color: "#000"
+  },
+  showText: {
+    fontWeight: "600", 
+    color: "#111", 
+    paddingLeft: 10
   },
   btn: {
     backgroundColor: "#111", 
