@@ -15,15 +15,12 @@ const apiCall = async <T>(
     "Content-Type": "application/json",
   };
 
-  // ✅ Dashboard API wants header: token
+  // send token in Authorization header
   if (token) {
-    headers.token = token;
+    headers.Authorization = `Bearer ${token}`;
   }
 
-  const options: any = {
-    method,
-    headers,
-  };
+  const options: any = {method, headers};
 
   if (body) {
     options.body = JSON.stringify(body);
